@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import * as tc from '@actions/tool-cache'
 import * as io from '@actions/io'
+import { join } from 'path'
 
 async function createTempDir() {
 	let tmpDir = process.env['RUNNER_TEMPDIRECTORY'] || 'tmp/'
@@ -20,7 +21,7 @@ function baseLocation() {
 		base = `${process.env.HOME}`
 	}
 
-	return `${base}/${name}`
+	return join(base, name)
 }
 
 function getToolUrl(version) {
@@ -65,7 +66,7 @@ export async function getInstaller(version) {
 
 	core.debug(`executable path: ${path}`)
 
-	let bin = `${extracted}/${executionName()}`
+	let bin = join(extracted, executionName())
 
 	core.debug(`executable file: ${bin}`)
 

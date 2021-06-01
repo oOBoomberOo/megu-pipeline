@@ -5279,7 +5279,10 @@ var exec = __nccwpck_require__(514);
 var tool_cache = __nccwpck_require__(784);
 // EXTERNAL MODULE: ./node_modules/@actions/io/lib/io.js
 var io = __nccwpck_require__(436);
+// EXTERNAL MODULE: external "path"
+var external_path_ = __nccwpck_require__(622);
 ;// CONCATENATED MODULE: ./src/installer.js
+
 
 
 
@@ -5302,7 +5305,7 @@ function baseLocation() {
 		base = `${process.env.HOME}`
 	}
 
-	return `${base}/${name}`
+	return (0,external_path_.join)(base, name)
 }
 
 function getToolUrl(version) {
@@ -5347,7 +5350,7 @@ async function getInstaller(version) {
 
 	core.debug(`executable path: ${path}`)
 
-	let bin = `${extracted}/${executionName()}`
+	let bin = (0,external_path_.join)(extracted, executionName())
 
 	core.debug(`executable file: ${bin}`)
 
