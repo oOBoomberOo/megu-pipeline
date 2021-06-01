@@ -5296,7 +5296,6 @@ async function createTempDir() {
 }
 
 async function baseLocation() {
-	let name = executionName()
 	let base = ''
 
 	if (process.platform === 'win32') {
@@ -5307,7 +5306,7 @@ async function baseLocation() {
 
 	await io.mkdirP(base)
 
-	return (0,external_path_.join)(base, name)
+	return base
 }
 
 function getToolUrl(version) {
@@ -5348,16 +5347,18 @@ async function getInstaller(version) {
 
 	core.debug(`extracted tool: ${extracted}`)
 
-	let path = await baseLocation()
+	let base = await baseLocation()
 
-	core.debug(`executable path: ${path}`)
+	core.debug(`executable path: ${base}`)
 
 	let bin = (0,external_path_.join)(extracted, executionName())
 
 	core.debug(`executable file: ${bin}`)
 
+	let path = (0,external_path_.join)(base, 'megu')
+
 	await io.mv(bin, path)
-	core.addPath(path)
+	core.addPath(base)
 
 	return path
 }
