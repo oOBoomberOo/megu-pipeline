@@ -2,12 +2,12 @@
   "name": "megu-pipeline",
   "version": "1.0.0",
   "description": "A GitHub action for running megumax in CI",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "engines": {
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "npm run build && node src/index.js",
+    "start": "npm run build && node dist/index.js",
     "build": "ncc build src/index.js"
   },
   "keywords": [
