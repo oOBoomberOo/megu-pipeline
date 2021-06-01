@@ -5370,7 +5370,7 @@ async function showVersion() {
 		}
 	}
 
-	let exit_code = exec.exec('megu', ['--version'], options)
+	let exit_code = await exec.exec('megu', ['--version'], options)
 
 	core.debug(`
 	exit code: ${exit_code}
