@@ -1,6 +1,6 @@
-import core from '@actions/core'
-import tc from '@actions/tool-cache'
-import io from '@actions/io'
+import * as core from '@actions/core'
+import * as tc from '@actions/tool-cache'
+import * as io from '@actions/io'
 
 async function createTempDir() {
 	let tmpDir = process.env['RUNNER_TEMPDIRECTORY'] || 'tmp/'

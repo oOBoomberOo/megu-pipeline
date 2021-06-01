@@ -5250,35 +5250,6 @@ module.exports = require("util");;
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__nccwpck_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__nccwpck_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__nccwpck_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -5302,16 +5273,12 @@ __nccwpck_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(186);
-var core_default = /*#__PURE__*/__nccwpck_require__.n(core);
 // EXTERNAL MODULE: ./node_modules/@actions/exec/lib/exec.js
 var exec = __nccwpck_require__(514);
-var exec_default = /*#__PURE__*/__nccwpck_require__.n(exec);
 // EXTERNAL MODULE: ./node_modules/@actions/tool-cache/lib/tool-cache.js
 var tool_cache = __nccwpck_require__(784);
-var tool_cache_default = /*#__PURE__*/__nccwpck_require__.n(tool_cache);
 // EXTERNAL MODULE: ./node_modules/@actions/io/lib/io.js
 var io = __nccwpck_require__(436);
-var io_default = /*#__PURE__*/__nccwpck_require__.n(io);
 ;// CONCATENATED MODULE: ./src/installer.js
 
 
@@ -5319,8 +5286,8 @@ var io_default = /*#__PURE__*/__nccwpck_require__.n(io);
 
 async function createTempDir() {
 	let tmpDir = process.env['RUNNER_TEMPDIRECTORY'] || 'tmp/'
-	await io_default().mkdirP(tmpDir)
-	core_default().debug(`temp directory: ${tmpDir}`)
+	await io.mkdirP(tmpDir)
+	core.debug(`temp directory: ${tmpDir}`)
 
 	return tmpDir
 }
@@ -5360,24 +5327,24 @@ function executionName() {
 
 async function extract(path, dest) {
 	if (process.platform === 'win32') {
-		return await tool_cache_default().extractZip(path, dest)
+		return await tool_cache.extractZip(path, dest)
 	} else if (process.platform === 'darwin') {
-		return await tool_cache_default().extractZip(path, dest)
+		return await tool_cache.extractZip(path, dest)
 	} else if (process.platform === 'linux') {
-		return await tool_cache_default().extractTar(path, dest)
+		return await tool_cache.extractTar(path, dest)
 	}
 }
 
 async function getInstaller(version) {
 	let url = getToolUrl(version)
 	let dir = await createTempDir()
-	let tool = await tool_cache_default().downloadTool(url)
+	let tool = await tool_cache.downloadTool(url)
 	let extracted = await extract(tool, dir)
 
 	let path = baseLocation()
 	let bin = `${extracted}/${executionName()}`
-	await io_default().mv(bin, path)
-	core_default().addPath(path)
+	await io.mv(bin, path)
+	core.addPath(path)
 
 	return path
 }
@@ -5395,9 +5362,9 @@ async function showVersion() {
 		}
 	}
 
-	let exit_code = exec_default().exec('megu', ['--version'], options)
+	let exit_code = exec.exec('megu', ['--version'], options)
 
-	core_default().debug(`
+	core.debug(`
 	exit code: ${exit_code}
 	stdout: ${output}
 	`)
@@ -5410,14 +5377,14 @@ async function showVersion() {
 
 async function run() {
 	try {
-		let version = core_default().getInput('version', { required: true })
+		let version = core.getInput('version', { required: true })
 
-		core_default().info(`megumax version: ${version}`)
+		core.info(`megumax version: ${version}`)
 		await getInstaller(version)
 
 		return await showVersion()
 	} catch (e) {
-		core_default().setFailed(`Action failed with error: ${e.message}`)
+		core.setFailed(`Action failed with error: ${e.message}`)
 	}
 }
 
