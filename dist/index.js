@@ -5295,15 +5295,17 @@ async function createTempDir() {
 	return tmpDir
 }
 
-function baseLocation() {
+async function baseLocation() {
 	let name = executionName()
 	let base = ''
 
 	if (process.platform === 'win32') {
-		base = `${process.env['USERPROFILE']}`
+		base = `${process.env['USERPROFILE']}/.bin`
 	} else {
-		base = `${process.env.HOME}`
+		base = `${process.env.HOME}/.bin`
 	}
+
+	await io.mkdirP(base)
 
 	return (0,external_path_.join)(base, name)
 }
@@ -5346,7 +5348,7 @@ async function getInstaller(version) {
 
 	core.debug(`extracted tool: ${extracted}`)
 
-	let path = baseLocation()
+	let path = await baseLocation()
 
 	core.debug(`executable path: ${path}`)
 
