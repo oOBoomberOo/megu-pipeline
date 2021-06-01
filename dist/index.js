@@ -5300,11 +5300,6 @@ var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __nccwpck_require__.r(__webpack_exports__);
 
-// EXPORTS
-__nccwpck_require__.d(__webpack_exports__, {
-  "run": () => (/* binding */ run)
-});
-
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(186);
 var core_default = /*#__PURE__*/__nccwpck_require__.n(core);
@@ -5415,16 +5410,18 @@ async function showVersion() {
 
 async function run() {
 	try {
-		let version = core_default().getInput('version')
+		let version = core_default().getInput('version', { required: true })
+
 		core_default().info(`megumax version: ${version}`)
 		await getInstaller(version)
 
 		return await showVersion()
 	} catch (e) {
-		core_default().setFailed(`Action failed with error: ${e}`)
-		return e
+		core_default().setFailed(`Action failed with error: ${e.message}`)
 	}
 }
+
+run()
 })();
 
 module.exports = __webpack_exports__;

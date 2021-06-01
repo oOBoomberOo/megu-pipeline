@@ -24,15 +24,17 @@ async function showVersion() {
 	}
 }
 
-export async function run() {
+async function run() {
 	try {
-		let version = core.getInput('version')
+		let version = core.getInput('version', { required: true })
+
 		core.info(`megumax version: ${version}`)
 		await getInstaller(version)
 
 		return await showVersion()
 	} catch (e) {
-		core.setFailed(`Action failed with error: ${e}`)
-		return e
+		core.setFailed(`Action failed with error: ${e.message}`)
 	}
 }
+
+run()
