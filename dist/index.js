@@ -5341,7 +5341,7 @@ async function getInstaller(version) {
 	let tool = await tool_cache.downloadTool(url)
 	let extracted = await extract(tool, dir)
 
-	core.debug(`extracted tool: ${extract}`)
+	core.debug(`extracted tool: ${extracted}`)
 
 	let path = baseLocation()
 
