@@ -1,0 +1,11 @@
+name: "Megumax Runner"
+author: "Boomber <contact@boomber.xyz>"
+description: "Building megumax project"
+inputs:
+  version:
+    description: 'Version of megumax'
+    required: true
+
+runs:
+  using: 'node12'
+  main: 'src/index.js'
