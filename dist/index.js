@@ -5341,8 +5341,16 @@ async function getInstaller(version) {
 	let tool = await tool_cache.downloadTool(url)
 	let extracted = await extract(tool, dir)
 
+	core.debug(`extracted tool: ${extract}`)
+
 	let path = baseLocation()
+
+	core.debug(`executable path: ${path}`)
+
 	let bin = `${extracted}/${executionName()}`
+
+	core.debug(`executable file: ${bin}`)
+
 	await io.mv(bin, path)
 	core.addPath(path)
 
@@ -5388,7 +5396,7 @@ async function run() {
 	}
 }
 
-run()
+run().catch(e => core.setFailed(`Action failed with error: ${e.message}`))
 })();
 
 module.exports = __webpack_exports__;

@@ -59,8 +59,16 @@ export async function getInstaller(version) {
 	let tool = await tc.downloadTool(url)
 	let extracted = await extract(tool, dir)
 
+	core.debug(`extracted tool: ${extract}`)
+
 	let path = baseLocation()
+
+	core.debug(`executable path: ${path}`)
+
 	let bin = `${extracted}/${executionName()}`
+
+	core.debug(`executable file: ${bin}`)
+
 	await io.mv(bin, path)
 	core.addPath(path)
 

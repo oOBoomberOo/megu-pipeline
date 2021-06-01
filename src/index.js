@@ -37,4 +37,4 @@ async function run() {
 	}
 }
 
-run()
+run().catch(e => core.setFailed(`Action failed with error: ${e.message}`))
